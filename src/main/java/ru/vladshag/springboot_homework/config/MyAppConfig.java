@@ -1,23 +1,28 @@
 package ru.vladshag.springboot_homework.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.vladshag.springboot_homework.profiles.DevProfile;
-import ru.vladshag.springboot_homework.profiles.ProductionProfile;
-import ru.vladshag.springboot_homework.profiles.SystemProfile;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import ru.vladshag.springboot_homework.handlers.UserResolver;
+import ru.vladshag.springboot_homework.repository.UserRepository;
+import ru.vladshag.springboot_homework.service.AuthorizationService;
+
+import java.util.List;
 
 @Configuration
-public class MyAppConfig {
-    @Bean
-    @ConditionalOnProperty(prefix = "netology.profile", name = "dev", havingValue = "false")
-    public SystemProfile devProfile() {
-        return new DevProfile();
+public class MyAppConfig implements WebMvcConfigurer {
+
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolverList){
+        argumentResolverList.add(new UserResolver());
     }
     @Bean
-    @ConditionalOnProperty(prefix = "netology.profile", name = "dev", havingValue = "true")
-    public SystemProfile prodProfile() {
-        return new ProductionProfile();
+    public UserRepository repository() {
+        return new UserRepository();
+    }
+    @Bean
+    public AuthorizationService service() {
+        return new AuthorizationService();
     }
 
 }
