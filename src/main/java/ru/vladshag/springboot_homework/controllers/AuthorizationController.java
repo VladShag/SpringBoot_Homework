@@ -16,6 +16,10 @@ import java.util.List;
 public class AuthorizationController {
     @Autowired
     AuthorizationService service;
+    @GetMapping("/hello")
+    public String testPage() {
+        return "Hello";
+    }
 
     @GetMapping("/authorize")
     public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
