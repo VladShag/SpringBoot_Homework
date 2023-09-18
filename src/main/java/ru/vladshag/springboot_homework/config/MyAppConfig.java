@@ -10,12 +10,12 @@ import ru.vladshag.springboot_homework.profiles.SystemProfile;
 @Configuration
 public class MyAppConfig {
     @Bean
-    @ConditionalOnProperty(prefix = "netology.profile", name = "dev", havingValue = "false")
+    @ConditionalOnProperty(prefix = "netology.profile", name = "dev", havingValue = "true")
     public SystemProfile devProfile() {
         return new DevProfile();
     }
     @Bean
-    @ConditionalOnProperty(prefix = "netology.profile", name = "dev", havingValue = "true")
+    @ConditionalOnProperty(prefix = "netology.profile", name = "dev", havingValue = "false")
     public SystemProfile prodProfile() {
         return new ProductionProfile();
     }
